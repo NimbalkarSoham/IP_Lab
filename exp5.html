@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EXPT 5: Advanced Javascript</title>
+    <link rel="stylesheet" href="exp5.css" />
+  </head>
+  <body>
+    <center>
+      <div class="container">
+        <h1>Basic Calculator</h1>
+        <input type="number" id="num1" placeholder="Enter first number" />
+        <input type="number" id="num2" placeholder="Enter second number" />
+        <select id="operator">
+          <option value="add">Addition (+)</option>
+          <option value="subtract">Subtraction (-)</option>
+          <option value="multiply">Multiplication (*)</option>
+          <option value="divide">Division (/)</option>
+        </select>
+        <button onclick="calculate()" class="buttons">Calculate</button>
+        <p id="result"></p>
+      </div>
+
+      <div class="container">
+        <h1>Custom Iterator for Squares</h1>
+        <form>
+          <label for="numbers">Enter numbers (comma-separated):</label>
+          <input type="text" id="numbers" placeholder="1, 2, 3, 4, 5" />
+          <button type="button" onclick="generateSquares()" class="buttons">
+            Generate Squares
+          </button>
+        </form>
+        <p id="output-2"></p>
+      </div>
+
+      <div class="container">
+        <h1>Prime Number Generator</h1>
+        <form>
+          <label for="limit">Enter a limit for prime numbers:</label>
+          <input type="number" id="limit" placeholder="Enter limit" min="2" />
+          <button type="button" onclick="displayPrimes()" class="buttons">
+            Generate Primes
+          </button>
+        </form>
+        <p id="output-3"></p>
+      </div>
+    </center>
+
+    <script>
+      function calculate() {
+        const num1 = parseFloat(document.getElementById("num1").value);
+        const num2 = parseFloat(document.getElementById("num2").value);
+        const operator = document.getElementById("operator").value;
+
+        const calculatePromise = new Promise((resolve, reject) => {
+          if (isNaN(num1) || isNaN(num2)) {
+            reject("Please enter valid numbers.");
+          } else {
+            switch (operator) {
+              case "add":
+                resolve(num1 + num2);
+                break;
+              case "subtract":
+                resolve(num1 - num2);
+                break;
+              case "multiply":
+                resolve(num1 * num2);
+                break;
+              case "divide":
+                if (num2 === 0) {
+                  reject("Division by zero is not allowed.");
+                } else {
+                  resolve(num1 / num2);
+                }
+                break;
+              default:
+                reject("Invalid operator.");
+            }
+          }
+        });
+
+        calculatePromise
+          .then((result) => {
+            document.getElementById("result").textContent = `Result: ${result}`;
+          })
+          .catch((error) => {
+            document.getElementById("result").textContent = `Error: ${error}`;
+          });
+      }
+
+      function generateSquares() {
+        const input = document.getElementById("numbers").value;
+        const numbers = input.split(",").map((num) => parseFloat(num.trim()));
+
+        const squareIterator = function* (arr) {
+          for (let num of arr) {
+            yield num * num;
+          }
+        };
+
+        const iterator = squareIterator(numbers);
+
+        const outputElement = document.getElementById("output-2");
+        outputElement.textContent = "Squares: ";
+
+        for (let result of iterator) {
+          outputElement.textContent += result + " ";
+        }
+      }
+
+      function isPrime(num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 === 0 || num % 3 === 0) return false;
+
+        let i = 5;
+        while (i * i <= num) {
+          if (num % i === 0 || num % (i + 2) === 0) return false;
+          i += 6;
+        }
+
+        return true;
+      }
+
+      function* generatePrimes(limit) {
+        for (let num = 2; num <= limit; num++) {
+          if (isPrime(num)) {
+            yield num;
+          }
+        }
+      }
+
+      function displayPrimes() {
+        const limit = parseInt(document.getElementById("limit").value);
+
+        if (isNaN(limit) || limit < 2) {
+          alert("Please enter a valid limit (>= 2).");
+          return;
+        }
+
+        const primeGenerator = generatePrimes(limit);
+        const primes = Array.from(primeGenerator);
+
+        const outputElement = document.getElementById("output-3");
+        if (primes.length === 0) {
+          outputElement.textContent = "No prime numbers found.";
+        } else {
+          outputElement.textContent = `Prime numbers up to the limit: ${primes.join(
+            ", "
+          )}`;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+body {
+  background-image: url("https://images.unsplash.com/photo-1528460033278-a6ba57020470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA1fHx3ZWJzaXRlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60");
+  background-position: center;
+}
+
+/* Glassmorphism card effect */
+.box {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.box {
+  width: 70%;
+  color: white;
+  margin: 15px;
+}
+
+.container {
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+a {
+  margin: 10px;
+  color: white;
+}
+
+p,
+a {
+  font-size: 20px;
+}
+
+#heading {
+  color: black;
+  font-size: 80px;
+}
+
+h3 {
+  font-size: 20px;
+}

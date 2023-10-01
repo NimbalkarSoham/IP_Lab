@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customized T-Shirt Order Form</title>
+    <link rel="stylesheet" href="exp4A.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="hero">
+        <img src="/public/tshirt.gif" class="hero_img" alt="tshirt GIF" />
+      </div>
+      <div class="form" id="form-container">
+        <h1>Customized T-Shirt Order Form</h1>
+        <form action="#" onsubmit="return validateForm();" class="form-body">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <label for="tagline">
+                    <h3>Tagline:</h3>
+                  </label>
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="tagline"
+                    name="tagline"
+                    required
+                    placeholder="Enter Tagline"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="color">
+                    <h3>Color:</h3>
+                  </label>
+                </td>
+                <td>
+                  <p>
+                    <input
+                      type="color"
+                      id="color"
+                      name="color"
+                      required
+                      placeholder="Enter Color"
+                    />&nbsp;&nbsp;Select a color for your Tshirt
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="color">
+                    <h3>Design</h3>
+                  </label>
+                </td>
+                <td>
+                  <p>
+                    Add an Image to print on your Tshirt:&nbsp;
+                    <input
+                      type="file"
+                      src="/public/tshirt.gif"
+                      alt="Submit"
+                      width="130"
+                      height="130"
+                    />
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="size">
+                    <h3>Size:</h3>
+                  </label>
+                </td>
+                <td>
+                  <select id="size" name="size" required>
+                    <option value="">Select Size</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="quantity">
+                    <h3>Quantity:</h3>
+                  </label>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    min="1"
+                    required
+                    placeholder="Enter Quantity"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td>
+                  <h3>Other details of delivery:</h3>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="delivery_date">
+                    <h3>Delivery Date:</h3>
+                  </label>
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    id="delivery_date"
+                    name="delivery_date"
+                    required
+                    placeholder="Enter Delivery Date"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="delivery_date">
+                    <h3>Contact No:</h3>
+                  </label>
+                </td>
+                <td>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="79771-70174"
+                    required
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="delivery_details">
+                    <h3>Address:</h3>
+                  </label>
+                </td>
+                <td>
+                  <textarea
+                    id="delivery_details"
+                    name="delivery_details"
+                    rows="4"
+                    cols="35"
+                    placeholder="Address to be delivered to"
+                  ></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <input type="submit" value="Place Order" class="buttons" />
+            <input type="reset" value="Reset Form" class="buttons" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      function validateForm() {
+        // Validation logic here
+        var tagline = document.getElementById("tagline").value;
+        var phone = document.getElementById("phone").value;
+        var quantity = document.getElementById("quantity").value;
+
+        // Check if tagline length is less than or equal to 100 characters
+        if (tagline.length > 100) {
+          alert("Tagline should be less than or equal to 100 characters.");
+          return false;
+        }
+
+        // Check if quantity is more than 0
+        if (quantity < 1) {
+          alert("Minimum quantity is 1.");
+          return false;
+        }
+
+        // Check if phone number has 9 digits
+        if (!/^\d{10}$/.test(phone)) {
+          alert("Please enter a valid 10-digit phone number.");
+          return false;
+        }
+
+        // If validation passes, you can proceed to generate the receipt
+        generateReceipt();
+        return false; // Prevent form submission for now
+      }
+
+      function generateReceipt() {
+        var receiptDate = new Date().toLocaleDateString();
+        var receipt = `
+          Order Receipt
+          Date: ${receiptDate}
+          Tagline: ${document.getElementById("tagline").value}
+          Color: ${document.getElementById("color").value}
+          Size: ${document.getElementById("size").value}
+          Quantity: ${document.getElementById("quantity").value}
+          Delivery Date: ${document.getElementById("delivery_date").value}
+          Contact No: ${document.getElementById("phone").value}
+          Address: ${document.getElementById("delivery_details").value}
+        `;
+
+        // Display the receipt
+        alert(receipt);
+      }
+    </script>
+  </body>
+</html>
